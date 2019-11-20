@@ -1,0 +1,207 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 公共Js -->
+		<script type="text/javascript" src="../../js/reapp/app-comn.js" ></script>
+		<script type="text/javascript" src="../../js/reapp/web-ajax.js" ></script>
+		<script type="text/javascript" src="../../js/reapp/req-params.js" ></script>
+		<!-- 模版Js -->
+		<script type="text/javascript" src="../../js/template.js" ></script>
+		<script type="text/javascript" src="../../js/reapp/chicang.js" ></script>
+		<!-- 自定义样式 -->
+		<link rel="stylesheet" href="../../css/app-comn.css" />
+		<link rel="stylesheet" href="../../css/chicang.css" />
+		
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<!-- 加载索引 -->
+			<input type="hidden" id="beginIndex" value="0" />
+			<!-- 加载标识 0完毕 1执行中 -->
+			<input type="hidden" id="loadFlag" value="0" />
+			<!-- 冻结资金 -->
+			<input type="hidden" id="currentBuyFreezeAmtVal" value="0" />
+			<!-- 当前可用 -->
+			<input type="hidden" id="currentEnableAmtVal" value="0" />
+			
+			<!-- 资金股份汇总列表 Start -->
+			<div class="box">
+			   	<!--<p id="chiCangRMB">人民币账户 CNY</p>-->
+		    	<div class="box-a">
+		    		<p class="box-a-p1">总资产</p>
+		    		<p class="box-a-p2"><span id="totalAsset"></span></p>
+		    	</div>
+		    	<div class="box-a">
+		    		<p class="box-a-p1">可用资金</p>
+		    		<p class="box-a-p2"><span id="currentEnableAmt"></span></p>
+		    	</div>
+		    	<div class="box-a">
+		    		<p class="box-a-p1">参考市值</p>
+		    		<p class="box-a-p2"><span id="positionMarketValue">0.00</span></p>
+		    	</div>
+		    	<div class="box-a">
+		    		<p class="box-a-p1">盈亏</p>
+		    		<p class="box-a-p2"><span id="profitAmt">0.00</span></p>
+		    	</div>
+		    	<div class="box-a">
+		    		<p class="box-a-p1">资金余额</p>
+		    		<p class="box-a-p2"><span id="currentRemainAmt"></span></p>
+		    	</div>
+		    	<div class="box-a">
+		    		<p class="box-a-p1">预警线</p>
+		    		<p class="box-a-p2">
+		    			<span id="precautiousLineAmt" onclick="switOpenLineOrVal('warn_1');"></span>
+		    			<span id="precautiousLine" onclick="switOpenLineOrVal('warn_2');" style="display:none;color:red"></span>
+		    		</p>
+		    	</div>
+		    	<div class="box-a">
+		    		<p class="box-a-p1">平仓线</p>
+		    		<p class="box-a-p2">
+		    			<span id="openLineAmt" onclick="switOpenLineOrVal('open_1');"></span>
+		    			<span id="openLine" onclick="switOpenLineOrVal('open_2');" style="display:none;color:red"></span>
+		    		</p>
+		    	</div>
+		    	<!-- 刷新按钮 -->
+		    	<div class="box-a">
+		    		<button type="button" id="refreshCap">刷新</button>
+		    		<!--<button type="button" id="openChart" style="margin-top: 1px;background: #FF7F00;">图表</button>-->
+		    	</div>
+		    </div>
+		    <!-- 资金股份汇总列表 End -->
+		    
+		    <!-- 资产与持仓分隔线 -->
+		    <div class="box-separate"  align="center"></div>
+		    
+		    
+		    <!-- 持仓列表 Start -->
+		    <!-- 标题 -->
+		    <div class="box-b">
+		    	<div class="box-b-1">
+		    		<h4>名称/代码</h4>
+		    	</div>
+		    	<div class="box-b-2">
+		    		<h4>持仓/可卖</h4>
+		    	</div>
+		    	<div class="box-b-3">
+		    		<h4>市值/盈亏</h4>
+		    	</div>
+		    	<div class="box-b-4">
+		    		<h4>盈亏比</h4>
+		    	</div>
+		    	<div class="box-b-5">
+		    		<h4>现价/成本</h4>
+		    	</div>
+		    </div>
+		    <!-- 标题 -->
+		    
+		    <!-- 添加滚动条 Start  MUI默认是position是absolute-->  
+		    
+		    <!-- 添加滚动条 End--> 
+		    
+		</div>
+		<!-- js处理 -->
+		<script type="text/javascript">
+			/** 加载子页面:持仓列表 */
+			mui.init({
+				subpages:[{
+					url:'chicang_sub.html',
+					id:'chicang_sub.html',
+					styles:{
+						top: '162px',
+						bottom: '2px',
+					}
+				}]
+			});
+			
+			/** 页面加载 */
+			mui.plusReady(function(){
+				//Ajax调用后台取数据(资金股份)
+				ajaxCapStockQuery();
+				
+				//刷新按钮
+				document.getElementById("refreshCap").addEventListener('tap', function(){
+					//Ajax调用后台取数据(资金股份)
+					ajaxCapStockQuery();
+					
+					//调用子页面持仓 刷新
+					var chicangSub = plus.webview.getWebviewById('chicang_sub.html');
+					chicangSub.evalJS("ajaxStickListQuery()");
+					chicangSub.evalJS("mui('#scroll1').pullRefresh().refresh(true)");
+				});
+				
+				//显示图表按钮
+			/*	document.getElementById("openChart").addEventListener('tap', function(){
+					mui.openWindow({
+					    url: 'chicang-chart.html',
+					    id: 'chicang-chart.html',
+					    styles: {
+					        top: '0px', //新页面顶部位置
+					        bottom: '50px', //新页面底部位置
+					        width: '100%', //新页面宽度，默认为100%
+					        height: '100%' //新页面高度，默认为100%
+					    },
+					    show: {
+					        autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					        aniShow: 'slide-in-right', //页面显示动画，默认为”slide-in-right“；
+					        duration: '200' //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；
+					    },
+					    waiting: {
+					        autoShow: true, //自动显示等待框，默认为true
+					        title: '正在加载...', //等待对话框上显示的提示内容
+					        options: {
+					            width: '40%', //等待框背景区域宽度，默认根据内容自动计算合适宽度
+					            height: '30%' //等待框背景区域高度，默认根据内容自动计算合适高度
+					        }
+					    }
+					});
+				});
+			*/
+			
+				
+			
+			});
+			
+			/* 计算总资产 */
+			var timeId = null;
+			function countTotalAsset(marketAmt){
+				timeID = setTimeout(function(){
+					//console.log('统计总资产定时循环中..');
+				 	//加载方式
+					var loadFlag = document.getElementById('loadFlag').value;
+					if(loadFlag == '0') {
+						/* 加载完成, 计算总资产 */
+						//取可用资金
+						var currentEnableAmt = document.getElementById('currentEnableAmtVal').value;
+						//取冻结资金
+						var currentBuyFreezeAmt = document.getElementById('currentBuyFreezeAmtVal').value;
+						
+						//计算总资产
+						var totalAsset = parseFloat(marketAmt)+parseFloat(currentEnableAmt)+parseFloat(currentBuyFreezeAmt);
+						setCapItem(totalAsset+"", "totalAsset");
+						
+						//console.log('市值='+marketAmt+'可用='+currentEnableAmt+'冻结='+currentBuyFreezeAmt+'总资产='+totalAsset+' 关闭定时器..');
+						//console.log('统计总资产关闭定时器..');
+						//关闭定时器
+						closeTimeTask();
+					}
+				 }, 1000);
+			}
+			//关闭任务
+			function closeTimeTask() {
+				clearTimeout(timeID);
+			}
+			
+			
+			
+			
+		</script>
+	</body>
+
+</html>

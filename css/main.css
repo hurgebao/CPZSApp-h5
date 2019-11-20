@@ -1,0 +1,124 @@
+/** 公共自定义 Css */
+
+/** 首页头部 */
+.bg-color{
+	margin-top: 0px;
+    background:#DCDCDC; /* 一些不支持背景渐变的浏览器 */  
+    background:-moz-linear-gradient(top, #fff, #cccccc);  
+    background:-webkit-gradient(linear, 0 0, 0 bottom, from(#fff), to(#cccccc));  
+    background:-o-linear-gradient(top, #fff, #cccccc); ;border-bottom:#cb2938 3px solid;border-top:#cfcfcf 1px solid;
+   
+	height: 50px;
+}
+.bg-color h1{
+	color: #2B2B2B;
+	font-weight: bold;
+}
+
+/** 头部Logo */
+.bg-color a{
+	color:#2B2B2B;
+}
+.mui-pull-left {
+	width: 50%;
+}
+
+/* 头部 下边框 */
+.mui-bar{
+	border-bottom: 2px solid #EE3B3B;	
+}
+.bg-color a img{
+	max-width: 100%;
+	height: 25px;
+	margin-top:13px; /*距离顶部*/
+}
+/*.bg-color a h1{
+	width: 40px;
+	height: 20px;
+	margin-top: 15px;
+	font-size: 17px;
+	color: #2B2B2B;
+}*/
+.bg-color button {
+	margin-top: 14px;
+	height: 30px;
+	background: -webkit-linear-gradient(#CE293A 80%, #CE293A, #EE5C42); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#CE293A 80%, #CE293A, #EE5C42); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#CE293A 80%, #CE293A, #EE5C42); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#CE293A 80%, #CE293A, #EE5C42); /* 标准的语法（必须放在最后）*/
+	border: 1px ridge #C7C7C7; /* 边框 */;
+}
+.bg-color button h1{
+	font-size: 13px;
+	margin-top: 2px;
+	color: #FFFFFF;
+}
+
+.head-title {
+	overflow: hidden; /** 父级清除浮动 */
+	height: 50px;
+	
+}
+/* 状况标题 */
+/*.head-title-1{
+	width: 100%;
+	float: left ;
+	margin-top: -5px;
+	margin-bottom: 0px;
+	color:#2B2B2B; 
+	font-size: 16px;
+}*/
+.head-title p{
+	margin-top: 14px;
+	margin-left: 55%;
+	margin-right: 0px;
+}
+.head-title-2{
+	float: left ;
+	color:#2B2B2B;
+	font-size: 8px;
+}
+
+
+		 
+/* 底部选项卡背景 Start */
+.bar-bg-color{
+	/*background: red;*/
+	background: -webkit-linear-gradient(#CE293A 80%, #CE293A, #EE5C42); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#CE293A 80%, #CE293A, #EE5C42); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#CE293A 80%, #CE293A, #EE5C42); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#CE293A 80%, #CE293A, #EE5C42); /* 标准的语法（必须放在最后）*/
+} 
+/* 切换卡 添加 线 与 背景颜色 */
+.mui-tab-item {
+	border-right: 1px solid #CFCFCF; 
+}
+.mui-tab-item span {
+	color: #ffffff;
+}
+/* 公共标签 */
+.mui-active {
+	background: #8B2323;
+}
+
+/* 买入 标签*/
+/*.mui-active .icon-color-2{
+	color: #FF3030;
+	font-weight: bold;
+}
+.mui-active .label-color-2{
+	color: #FFFFFF;
+	font-weight: bold;
+}*/
+/* 卖出 标签*/
+/*.mui-active .icon-color-3{
+	color: #6495ED;
+	font-weight: bold;
+}
+.mui-active .label-color-3{
+	color: #FFFFFF;
+	font-weight: bold;
+}*/
+/* 底部选项卡背景 End */
+
+

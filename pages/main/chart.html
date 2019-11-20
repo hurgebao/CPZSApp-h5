@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="../../js/mui.min.js"></script>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!-- 公共Js -->
+		<script type="text/javascript" src="../../js/reapp/app-comn.js" ></script>
+		<script type="text/javascript" src="../../js/reapp/web-ajax.js" ></script>
+		<script type="text/javascript" src="../../js/reapp/req-params.js" ></script>
+		<link href="../../css/chart.css" rel="stylesheet" />
+	</head>
+	<body>
+		<div class="mui-content">
+			<!-- 资产分布 Start -->
+			<div class="chart-title" style="background: #FFFFFF;">资产分析</div>
+			<div style="height: 180px;background: #FFFFFF;">
+				<div id="myChartAsset" style="height:220px;width: 98%;"></div>
+			</div>
+			<div style="padding-top: -15px;padding-left: 10px;  height: 70px;background: #FFFFFF;">
+				<div class="chart-asset-row" style="margin-top:-10px;margin-bottom: 0px;">
+					<div class="chart-asset-block" style="color:#080808">
+						<div class="chart-asset-bolck-title">初始规模</div>
+						<div class="chart-asset-bolck-value"><b><span id="totalAmt">0.00</span> 元</b></div>
+					</div>
+					<div class="chart-asset-block" style="color:#8B2252;">
+						<div class="chart-asset-bolck-title">总资产 (<b><span id="totalAssetNet">0.00</span>%</b>)</div>
+						<div class="chart-asset-bolck-value"><b><span id="totalAsset">0.00</span> 元</b></div>
+					</div>
+					<div class="chart-asset-block" style="color:#A52A2A">
+						<div class="chart-asset-bolck-title">持仓市值 (<b><span id="positionMarketValuePer"></span>%</b>)</div>
+						<div class="chart-asset-bolck-value"><b><span id="positionMarketValue">0.00</span> 元</b></div>
+					</div>
+					
+				</div>
+				<div class="chart-asset-row" style="margin-bottom: 0px;">
+					<div class="chart-asset-block" style="color:#8B6508;">
+						<div class="chart-asset-bolck-title">预警线 (<b><span id="precautiousLineAmtPer">0.00</span>%</b>)</div>
+						<div class="chart-asset-bolck-value"><b><span id="precautiousLineAmt">0.00</span> 元</b></div>
+					</div>
+					<div class="chart-asset-block" style="color:#CD0000">
+						<div class="chart-asset-bolck-title">平仓线 (<b><span id="openLineAmtPer">0.00</span>%</b>)</div>
+						<div class="chart-asset-bolck-value"><b><span id="openLineAmt">0.00</span> 元</b></div>
+					</div>
+					<div class="chart-asset-block" style="color:#404040">
+						<div class="chart-asset-bolck-title">可用余额 (<b><span id="currentRemainAmtPer">0.00</span>%</b>)</div>
+						<div class="chart-asset-bolck-value"><b><span id="currentRemainAmt">0.00</span> 元</b></div>
+					</div>
+				</div>
+				<div class="chart-asset-row">
+					
+					
+				</div>
+			</div>
+			<!-- 资产分布 End -->
+			
+			<!-- 分隔线 Start -->
+			<div class="box-separate"  align="center"></div>
+			<!-- 分隔线 End -->
+			
+			<!-- 股票持仓 Start -->
+			<div class="chart-title" style="background: #FFFFFF;">持仓分析</div>
+		    <div style="margin-top:0px; height: 170px;background: #FFFFFF;">
+		    	<p>&nbsp;</p>
+		    	<div id="myChartMarket" style="margin-top:-50px;padding-left:15px;height:200px;width: 100%;"></div>
+		    </div>
+		    <!-- 股票持仓 End -->
+			
+			<!-- 分隔线 Start -->
+			<div class="box-separate"  align="center"></div>
+			<!-- 分隔线 End -->
+			
+			<!-- 总资产变化曲线 Start -->
+			<div class="chart-title" style="background: #FFFFFF;">资产变化趋势图</div>
+		    <div style="margin-top:0px; height: 210px;background: #FFFFFF;">
+		    	<p>&nbsp;</p>
+		    	<div id="myChartHisFund" style="margin-top:-20px;padding-left:15px;height:200px;width: 100%;"></div>
+		    </div>
+		    <!-- 总资产变化曲线 End -->
+		    
+			<!-- 交易量统计 Start -->
+			<!--<div class="chart-title" style="background: #FFC0CB;">交易量统计(万)</div>
+		    <div style="margin-top:0px; height: 210px;background: #FFC0CB;">
+		    	<p>&nbsp;</p>
+		    	<div id="myChartTrade" style="margin-top:-20px;padding-left:15px;height:200px;width: 100%;"></div>
+		    </div>-->
+		    <!-- 交易量统计 End -->
+			
+		</div>
+		<!-- echats -->
+		<script src="../../js/echarts.min.js"></script>
+		<script src="../../js/reapp/chart.js"></script>
+
+	</body>
+
+</html>

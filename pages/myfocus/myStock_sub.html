@@ -1,0 +1,247 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/chedan.css" />
+		<link rel="stylesheet" href="../../css/iconfont.css" />
+		<link rel="stylesheet" href="../../css/queryPage.css" />
+		
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/reapp/app-comn.js" ></script>
+		<script type="text/javascript" src="../../js/reapp/req-params.js" ></script>
+		<script type="text/javascript" src="../../js/reapp/web-ajax.js" ></script>
+		<script type="text/javascript" src="../../js/reapp/chedan.js" ></script>
+		<script type="text/javascript" src="../../js/template.js" ></script>
+		<style type="text/css">
+			/* 列表头部 */
+			.box-a-1 h4{
+				width: 10%;
+				float: left ; /* 添加浮动*/
+			}
+			.box-a-2 h4{
+				width: 40%;
+				float: left ; /* 添加浮动*/
+			}
+			.box-a-3 h4{
+				width: 25%;
+				/*background: darkgoldenrod;*/
+				float: left ; /* 添加浮动*/
+			}
+			.box-a-4 h4{
+				width: 25%;
+				/*background: lawngreen;*/
+				float: left ; /* 添加浮动*/
+			}
+
+			/** 列表数据区 */
+			.box-a-list{
+				overflow: hidden; /** 父级清除浮动 */
+				height: 25px;
+				padding: 0px 0px; /** 相比上下左右 间距 */
+				border-bottom: 1px solid #DBDBDB; /*添加 线 */
+			}
+			/* 展示列表数据样式 */
+			.box-a-list-1{
+				width: 10%;
+				float: left ; /* 添加浮动*/
+			}
+			.box-a-list-2{
+				width: 40%;
+				float: left ; /* 添加浮动*/
+			}
+			.box-a-list-3{
+				width: 25%;
+				float: left ; /* 添加浮动*/
+			}
+			.box-a-list-4{
+				width: 25%;
+				float: left ; /* 添加浮动*/
+			}
+			/** 展示列表数据样式 start  */
+			.box-a-list-1 p{
+				text-align: center;
+				margin-bottom: 0px;
+				font-size: 13px;
+				height: 17px;
+			}
+			.box-a-list-2 p{
+				text-align: center;
+				padding: 0px 0px 0px 0px;
+				margin-bottom: 0px;
+				font-size: 13px;
+				height: 17px;
+			}
+			.box-a-list-3 p{
+				text-align: center;
+				padding: 0px 0px 0px 0px;
+				margin-bottom: 0px;
+				font-size: 13px;
+				height: 17px;
+			}
+			.box-a-list-4 p{
+				text-align: right;
+				padding: 0px 0px 0px 0px;
+				margin-bottom: 0px;
+				margin-right: 10px;
+				font-size: 13px;
+				height: 17px;
+			}
+			/** 展示列表数据样式 End  */
+
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<!-- 加载索引 -->
+			<input type="hidden" id="beginIndex" value="0" />
+			<!-- 查询日期 -->
+			<input type="hidden" id="beginDate" value="0" />
+			<input type="hidden" id="endDate" value="0" />
+		 
+			<!-- 添加滚动条 Start  MUI默认是position是absolute-->  
+			<div id="scroll1" class="mui-scroll-wrapper" >
+				<!-- MUI默认是position是absolute--> 
+			    <div class="mui-scroll"> 
+					<!-- 子功能块 Start -->
+					 <div id="boxLists" style="text-align: center;font-size: 13px;color: #777777;">
+						<span>没有相应的查询信息!</span>		     
+					 </div>  
+					<!-- 子功能块 End -->
+				</div>
+			</div>
+		    
+		</div>
+		
+		<script type="text/template" id="accountMrgDetailScript">
+			<div class="box-a-list">
+				<div class="box-a-list-1">
+					<p class="fontStyle01"><%=showdata.orderNum%></p>
+				</div>
+				<div class="box-a-list-2">
+					<p><%=showdata.busiDate%> <%=showdata.busiTime%></p>
+				</div>
+				<div class="box-a-list-3">
+					<p class="fontStyle02"><%=showdata.fundChangeType%></p>
+				</div>
+				<div class="box-a-list-4">
+					<p class="fontStyle03"><%=showdata.tradeAmt%> 元</p>
+				</div>
+			</div>
+						
+		</script>
+
+		
+		<script type="text/javascript">
+			mui.init({
+				swipeBack:true, //启用右滑关闭功能
+				pullRefresh : { 
+					container:"#scroll1",//下拉刷新容器标识 
+					down : {
+						style:'circle',//必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+						callback: pulldownRefresh
+					},
+					up : {
+						callback: pullupRefresh
+					}
+				}
+			});
+			//下拉刷新
+			function pulldownRefresh(){
+				//console.log('查询当日成交,下拉刷新')
+				/* 加载当日成交列表 */
+				sendRequest();
+				
+				//下拉刷新完成
+				mui('#scroll1').pullRefresh().endPulldownToRefresh();
+				mui('#scroll1').pullRefresh().refresh(true);
+			}
+			//上拉加载
+			function pullupRefresh(){
+				//console.log('查询当日成交,上拉加载')
+				/* 加载当日成交列表 */
+				sendRequest('updown');
+			}
+			
+			//请求加载数据
+			function sendRequest(eventOpe) {
+				//判断是点击刷新还是上拉加载
+				if(eventOpe == undefined || eventOpe == null) {
+					mui('#beginIndex')[0].value = '0';
+				} 
+				//开始查询记录索引
+				var startIndex = mui('#beginIndex')[0].value;
+				//console.log('当日委托加载..startIndex='+startIndex);
+				
+				//获取参数
+				var aWeekAgoDate = document.getElementById("beginDate").value;
+				var todayDate = document.getElementById("endDate").value;
+				var params = getAccountMgrDetailParams(aWeekAgoDate, todayDate, startIndex);
+				//请求数据
+				mui.web_query_post('query/getAccountMgrDetail', params, function(data){
+					if(data.returnCode === 0){
+						var listMaps = data.list;
+						if(listMaps.length == 0) {
+							//事件操作
+							if(eventOpe == 'updown') {
+								//上拉加载，true表示没有更多数据了，
+								mui('#scroll1').pullRefresh().endPullupToRefresh(true);
+							}
+							return;
+						}
+						else {
+							var contentStr = '';
+							for(var i = 0;i < listMaps.length; i++) {
+								var accountMgrDetailRow = listMaps[i];
+								var row = {
+									orderNum : (i+1),
+									id : accountMgrDetailRow.id,
+									tradeAmt : fmoney(accountMgrDetailRow.tradeAmt,2),
+									busiDate : getDateByLong(accountMgrDetailRow.busiTime),
+									busiTime : getTime(accountMgrDetailRow.busiTime),
+									fundChangeType : getDictKeyValueNew(accountMgrDetailRow.fundChangeType)
+								};
+						        var strList = template('accountMrgDetailScript', { 
+						            "showdata": row 
+						        }); 
+					       	 contentStr += strList;
+							}
+							//添加到列表中 , 追加记录
+							var boxLists = document.getElementById("boxLists").innerHTML;
+							if(startIndex == '0') {
+								boxLists = '';
+							} 
+							document.getElementById("boxLists").innerHTML = boxLists + contentStr;
+							//下次加载查询
+							var beginIndex = mui('#beginIndex')[0].value;
+							mui('#beginIndex')[0].value = parseInt(beginIndex)+listMaps.length;
+							
+							//事件操作
+							if(eventOpe == 'updown') {
+								//上拉加载，true表示没有更多数据了，
+								mui('#scroll1').pullRefresh().endPullupToRefresh(false);
+							}
+						}
+		            } else{
+		            	mui.toast('登录失败:'+data.returnMsg);
+		            }
+		      		
+				}, function(data){
+					//mui.toast('登录失败');
+				}, 3);
+			}
+			
+			
+
+			mui.plusReady(function(){});
+				
+			
+			
+		</script>
+	</body>
+
+</html>

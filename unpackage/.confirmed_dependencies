@@ -1,0 +1,58 @@
+{
+  "login.html": {
+    "refer": [
+      "main.html",
+      "pages/main/main.html"
+    ],
+    "resources": []
+  },
+  "pages/main/main.html": {
+    "resources": [
+      "pages/main/trade.html"
+    ],
+    "refer": [
+      "pages/main/trade.html",
+      "pages/main/chicang.html",
+      "pages/main/chart.html",
+      "pages/main/myset.html"
+    ]
+  },
+  "pages/main/myset.html": {
+    "refer": [
+      "pages/myfocus/changeSystem.html",
+      "pages/myfocus/myStock.html",
+      "pages/myfocus/myFocusOrg.html",
+      "pages/myfocus/myFocusAccount.html",
+      "pages/myfocus/myFocusSecAccount.html"
+    ],
+    "resources": []
+  },
+  "pages/myfocus/myStock.html": {
+    "resources": [
+      "pages/myfocus/myStock_sub.html"
+    ],
+    "refer": [
+      "pages/myfocus/myStock_sub.html"
+    ]
+  },
+  "pages/main/trade.html": {
+    "resources": [
+      "pages/main/trade-buy-key.html"
+    ],
+    "refer": [
+      "pages/main/trade-buy-key.html",
+      "pages/main/login.html"
+    ]
+  },
+  "pages/main/login.html": {
+    "refer": [
+      "pages/main/main.html"
+    ],
+    "resources": []
+  },
+  "pages/main/chicang.html": {
+    "refer": [
+      "pages/main/login.html"
+    ]
+  }
+}

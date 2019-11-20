@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/reapp/app-comn.js" ></script>
+		<script type="text/javascript" src="../../js/reapp/web-ajax.js" ></script>
+		<script type="text/javascript" src="../../js/reapp/req-params.js" ></script>
+		<script type="text/javascript" src="../../js/reapp/trade-sell.js" ></script>
+		<script type="text/javascript" src="../../js/template.js" ></script>
+		<link rel="stylesheet" href="../../css/app-comn.css" />
+		<link rel="stylesheet" href="../../css/trade-sell.css" />
+		
+	</head>
+ 
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #FF7878; color: #FFFFFF;">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color:#FFFFFF;"></a>
+		    <h1 class="mui-title" style="color:#FFFFFF;">持仓列表</h1>
+		</header>
+		<div class="mui-content">
+		    <!-- 加载索引 -->
+			<input type="hidden" id="beginIndex" value="0" />
+			<!-- 持仓列表 Start -->
+			<div class="box-c">
+				<!-- 标题 -->
+			    <div class="box-c-title">
+			    	<div class="box-c-title-1">
+			    		<h4>名称/代码</h4>
+			    	</div>
+			    	<div class="box-c-title-2">
+			    		<h4>持仓/可卖</h4>
+			    	</div>
+			    	<div class="box-c-title-3">
+			    		<h4>市值/盈亏</h4>
+			    	</div>
+			    	<div class="box-c-title-4">
+			    		<h4>盈亏比</h4>
+			    	</div>
+			    	<div class="box-c-title-5">
+			    		<h4>现价/成本</h4>
+			    	</div>
+			    </div>
+			    <!-- 标题 -->
+			 <!-- 持仓列表 End -->
+			</div>
+			<!-- 添加滚动条 Start  MUI默认是position是absolute-->  
+		    <div id="scroll1" class="mui-scroll-wrapper" style="top: 0px; bottom: 2px;"> 
+		    	<!-- MUI默认是position是absolute--> 
+		        <div class="mui-scroll">  
+					<!-- 持仓列表展示区 Start -->
+					<div id="boxLists">
+						<div class="box-list-market" style="text-align: center;font-size: 13px;color: #777777;">
+					      <span>没有相应的查询信息!</span>
+					    </div>
+				   </div>
+				    <!-- 持仓列表展示区 End -->
+				</div>
+			</div>
+		
+			<!-- 列表模块 -->
+			<script type="text/template" id="stock-tmp">
+				<div class="box-c-list <%=showdata.fontStyle%>" onclick="seletSellStock('<%=showdata.stockCode%>','<%=showdata.stockName%>','<%=showdata.enableNum%>');">
+					<div class="box-c-list-1">
+						<p><%=showdata.stockName%></p>
+						<p><%=showdata.stockCode%></p>
+					</div>
+					<div class="box-c-list-2">
+						<p><%=showdata.currentRemainNum%></p>
+						<p><%=showdata.currentEnableNum%></p>
+					</div>
+					<div class="box-c-list-3">
+						<p><%=showdata.marketValue%></p>
+						<p><%=showdata.profitLossAmt%></p>
+					</div>
+					<div class="box-c-list-4">
+						<p><%=showdata.profitRate%>%</p>
+					</div>
+					<div class="box-c-list-5">
+						<p><%=showdata.currentPrice%></p>
+						<p><%=showdata.costPrice%></p>
+					</div>
+				</div>
+			</script>
+		</div>
+			
+			
+		<script type="text/javascript">
+			//初始化加载
+			mui.init({ 
+				pullRefresh : { 
+					container:"#scroll1",//下拉刷新容器标识 
+					down : {
+						style:'circle',//必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+						callback: pulldownRefresh
+					},
+					up : { 
+				           	contentrefresh : "正在加载...",
+				            contentnomore:'没有更多数据了',
+				            callback : pullupRefresh //必选，刷新函数
+				        } 
+					}
+				}, {
+					tap: true //默认为true
+				}
+			);
+			//下拉刷新
+			function pulldownRefresh(){
+				//console.log('持仓查询-下拉刷新'); 
+				//Ajax调用后台取数据(持仓列表)
+				ajaxStickListQuery();
+				
+				//下拉刷新完成
+				mui('#scroll1').pullRefresh().endPulldownToRefresh();
+				mui('#scroll1').pullRefresh().refresh(true);
+			}
+			//上拉加载
+			function pullupRefresh(){
+				//console.log('卖出下单-上拉加载'); 
+				/* 读取资金股份(持仓列表) */
+				ajaxStickListQuery('updown');
+			}
+			
+			//点击持仓列表
+			function seletSellStock(stockCode, stockName, enableNum) {
+				//调用父类
+				var maichu = plus.webview.getWebviewById('trade-buy.html');
+				maichu.evalJS("seletMarketStock('"+stockCode+"', '"+stockName+"')");
+			}
+			
+			//Mui页面加载
+			mui.plusReady(function(){
+				/* 读取资金股份(持仓列表) */
+				ajaxStickListQuery();
+				
+			});
+		</script>
+	</body>
+
+</html>

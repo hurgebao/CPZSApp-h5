@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/chedan.css" />
+		<link rel="stylesheet" href="../../css/iconfont.css" />
+		
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/reapp/app-comn.js" ></script>
+		<script type="text/javascript" src="../../js/reapp/req-params.js" ></script>
+		<script type="text/javascript" src="../../js/reapp/web-ajax.js" ></script>
+		<script type="text/javascript" src="../../js/reapp/chedan.js" ></script>
+		<script type="text/javascript" src="../../js/template.js" ></script>
+		
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav sub-bg-color">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">自选股</h1>
+		</header>
+		
+		<div class="mui-content">
+		
+		    <div class="box-a">
+		    	<div class="box-a-1">
+		    		<h4>名称/代码</h4>
+		    	</div>
+		    	<div class="box-a-2">
+		    		<h4>当前价</h4>
+		    	</div>
+		    	<div class="box-a-3">
+		    		<h4>涨停/跌停</h4>
+		    	</div>
+		    	<div class="box-a-4">
+		    		<h4>今日涨幅</h4>
+		    	</div>
+		    </div>
+		 
+		    <!-- 列表区 -->
+		 
+		    
+		</div>
+		
+		<script type="text/javascript">
+			mui.init({  
+				swipeBack:true, //启用右滑关闭功能
+				subpages:[{
+					url:'myStock_sub.html',
+					id:'myStock_sub.html',
+					styles:{
+						top: '80px',
+						bottom: '0px',
+					}
+				}]
+			});
+			
+			mui.plusReady(function(){});
+
+		</script>
+	</body>
+
+</html>

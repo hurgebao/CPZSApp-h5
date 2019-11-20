@@ -1,0 +1,66 @@
+.trade-top {
+	background: red;
+}
+.trade-top h1 {
+	color: #FFFFFF;
+}
+.trade-top a{
+	color: #FFFFFF;
+	margin-top: 12px;
+}
+
+
+/* 选择方案 */
+.trade-sel-scheme {
+	text-align: center;
+}
+.trade-sel-scheme select{
+	height: 35px;
+	text-align: center;
+	font-size: 14px;
+}
+.mui-btn {
+	font-size: 16px;
+	padding: 8px;
+}
+
+/** 我的资产 Start */
+.trade-asset {
+	height: 25px;
+	margin-top: -10px;
+	overflow: hidden;
+	padding-top: 3px;
+	font-size: 12px;
+	border-bottom: 1px solid #BDBDBD;
+}
+.trade-asset-item {
+	float: left;
+	height: 35px;
+	width: 10%;
+	text-align: right;
+}
+.trade-asset-value {
+	float: left;
+	height: 35px;
+	width: 23%;
+	text-align: center;
+}
+/** 我的资产 End */
+
+
+/** 选中 选项卡 */
+.mui-segmented-control .bg-buy.mui-active {
+	background: #FF4040;
+}
+.mui-segmented-control .bg-sell.mui-active {
+	background: #6495ED;
+}
+.mui-segmented-control .bg-chedan.mui-active {
+	background: #222222;
+}
+.mui-segmented-control .bg-weituo.mui-active {
+	background: #222222;
+}
+/*.mui-segmented-control .mui-control-item{
+	background: #FFFFFF;
+}*/

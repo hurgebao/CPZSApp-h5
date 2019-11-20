@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/reapp/app-comn.js" ></script>
+		<link rel="stylesheet" href="../../css/myset.css" />
+		<style type="text/css">
+			.mui-content{
+				margin-top: -13px;
+			}
+			.title{
+			  	margin: 8px 10px 0px;
+			  	font-size: 15px;
+			  	color: #8B8989;
+			  }
+			/*.title+.content{
+			  	margin: 10px 15px 35px;
+			  	color: #bbb;
+			  	text-indent: 1em;
+			  	font-size: 14px;
+			  	line-height: 24px;
+			}*/
+		</style>
+	</head>
+
+	<body>
+		<!-- 头部 Top Start -->
+		<header class="mui-bar mui-bar-nav bg-color">
+		    <a class="mui-pull-left" >
+		    	<h2>操盘宝</h2>
+		    </a>
+		    <h1 class="mui-title head-title">
+		    	<p class="head-title-2" id="loginAcct">--</span>
+		    </h1>
+		   <!-- <a class="mui-pull-right" id="exitLogin">
+		    	<button><h1>退出</h1></button>
+		    </a>-->
+		</header>
+		<!-- 头部 Top End -->
+		
+		<div class="mui-content">
+			<!-- 查询列表 Start  -->
+			<div class="title" style="margin-top:20px;margin-bottom: 6px;">查询列表</div>
+			<ul id="listQuery" class="mui-table-view mui-table-view-chevron">
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="../myfocus/changeSystem.html">
+						切换系统
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="../myfocus/myStock.html">
+						自选股
+					</a>
+				</li>
+				<!--<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="../myfocus/myFocusOrg.html">
+						我关注的机构
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="../myfocus/myFocusAccount.html">
+						我关注的交易账户
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right" href="../myfocus/myFocusSecAccount.html">
+						我关注的证券账户
+					</a>
+				</li>-->
+			</ul>
+			<!-- 查询列表 End  -->
+			
+			<!-- 退出按钮 -->
+			<p style="margin: 20px 15px;">
+				<button id="exitLogin" type="button" class="mui-btn mui-btn-danger mui-btn-block" style="padding: 5px 20px;">退出登录</button>
+			</p>
+			<!-- 交易设置 End  -->
+		</div>
+		
+		
+		<script type="text/javascript">
+			mui.init();
+			
+			//页面加载进入方式
+			var aniShow = "slide-in-right"; //从右侧进入
+			
+			//点击li列表
+			function listTap(env) {
+				//子页面ID
+					var id = env.getAttribute('href');
+					//判断子页面是否已存在, 如果存在 销毁
+					var subPage = plus.webview.getWebviewById(id);
+					if(subPage != null) {
+						//console.log('销毁子页面:'+subPage);
+						subPage.close();
+					}
+					//子页面地址					
+					var href = env.href;
+					//打开子页面
+					mui.openWindow({
+							id: id,
+							url: env.href,
+							styles: {
+								popGesture: 'close'
+							},
+							show: {
+								aniShow: aniShow
+							},
+							waiting: {
+								autoShow: false
+							}
+					});
+			}
+			
+			//查询主页面加载
+			mui.plusReady(function(){
+				//显示登录账号
+				var loginAcct = document.getElementById("loginAcct");
+				if(loginAcct != undefined && loginAcct != null) {
+					//设置登录对象
+					loginAcct.innerHTML = UserInfo.getUserName();
+				}
+				
+				
+				//主列表点击事件(查询列表)
+				mui('#listQuery').on('tap', 'a', function() { 
+					listTap(this); 
+				});
+				//主列表点击事件(设置列表)
+				mui('#listSet').on('tap', 'a', function() { 
+					listTap(this); 
+				});
+				
+				
+				/** 退出登录 Start */
+				document.getElementById("exitLogin").addEventListener('tap', function(){
+					mui.confirm('确定退出交易客户端?', '温馨提示', new Array('取消', '确认'), function(e){
+						if(e.index == 1) {
+							//退出转到登录页面
+							exitToLogin();
+							
+							mui.toast('退出成功');
+						}
+					});
+				});
+				/** 退出登录 End */
+			});
+			
+			/** 退出转到登录页面 */
+			function exitToLogin(){
+				//清除本地登录缓存
+				UserInfo.clear();
+				
+				/** 跳转到登录页面 */
+				var loginPage = plus.webview.getWebviewById('login.html');
+				if(loginPage != null) {
+					loginPage.close();
+				}
+				loginPage = plus.webview.create('login.html', 'login.html');
+				loginPage.show();
+			}
+			
+			
+			
+			
+		</script>
+	</body>
+
+</html>

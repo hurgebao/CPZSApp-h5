@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/reapp/app-comn.js"></script>
+		<script src="../../js/reapp/trade-buy-key.js"></script>
+		<link rel="stylesheet" href="../../css/trade-buy.css" />
+	</head>
+	<body>
+						
+		<!--自定义键盘 Start -->
+			<div id="key" style="display: none;">
+			<!--<div id="key" >-->
+				<!-- 默认显示数字键盘 --> 
+				<input type="hidden" id="keyType" value="num" />
+				<input type="hidden" id="stockCode" value="" />
+				<input type="hidden" id="stockNameHid" value="" />
+				<div class="key-num" id="keyNum"   > 
+		            <div class="key-num-item item-color-btn key-item-q"><button>000</button></div>
+		            <div class="key-num-item key-item-set"><button>1</button></div>
+		            <div class="key-num-item key-item-set"><button>2</button></div>
+		            <div class="key-num-item key-item-set"><button>3</button></div>
+		            <div class="key-num-item item-color-btn key-item-q"><button>002</button></div>
+		            <div class="key-num-item item-color-btn key-item-q"><button>600</button></div>
+		            <div class="key-num-item key-item-set"><button>4</button></div>
+		            <div class="key-num-item key-item-set"><button>5</button></div>
+		            <div class="key-num-item key-item-set"><button>6</button></div>
+		            <div class="key-num-item item-color-btn key-item-q"><button>00</button></div>
+		            <div class="key-num-item item-color-btn key-item-q"><button>300</button></div>
+		            <div class="key-num-item key-item-set"><button>7</button></div>
+		            <div class="key-num-item key-item-set"><button>8</button></div>
+		            <div class="key-num-item key-item-set"><button>9</button></div>
+		            <div class="key-num-item item-color-btn key-item-q"><button>601</button></div>
+		        </div>
+				<!--<div class="key-title" id="keyTitle">-->
+				<div class="key-title" id="keyTitle" style="display: none;">
+				  <div>
+		            <div class="key-title-item key-item-set"><button>Q</button></div>
+		            <div class="key-title-item key-item-set"><button>W</button></div>
+		            <div class="key-title-item key-item-set"><button>E</button></div>
+		            <div class="key-title-item key-item-set"><button>R</button></div>
+		            <div class="key-title-item key-item-set"><button>T</button></div>
+		            <div class="key-title-item key-item-set"><button>Y</button></div>
+		            <div class="key-title-item key-item-set"><button>U</button></div>
+		            <div class="key-title-item key-item-set"><button>I</button></div>
+		            <div class="key-title-item key-item-set"><button>O</button></div>
+		            <div class="key-title-item key-item-set"><button>P</button></div>
+		         </div>
+		         <div class="key-title-2">
+		            <div class="key-title-item-2 key-item-set"><button>A</button></div>
+		            <div class="key-title-item-2 key-item-set"><button>S</button></div>
+		            <div class="key-title-item-2 key-item-set"><button>D</button></div>
+		            <div class="key-title-item-2 key-item-set"><button>F</button></div>
+		            <div class="key-title-item-2 key-item-set"><button>G</button></div>
+		            <div class="key-title-item-2 key-item-set"><button>H</button></div>
+		            <div class="key-title-item-2 key-item-set"><button>J</button></div>
+		            <div class="key-title-item-2 key-item-set"><button>K</button></div>
+		            <div class="key-title-item-2 key-item-set"><button>L</button></div>
+		         </div>
+		         <div class="key-title-3">
+		            <div class="key-title-item-3 key-item-set"><button>Z</button></div>
+		            <div class="key-title-item-3 key-item-set"><button>X</button></div>
+		            <div class="key-title-item-3 key-item-set"><button>C</button></div>
+		            <div class="key-title-item-3 key-item-set"><button>V</button></div>
+		            <div class="key-title-item-3 key-item-set"><button>B</button></div>
+		            <div class="key-title-item-3 key-item-set"><button>N</button></div>
+		            <div class="key-title-item-3 key-item-set"><button>M</button></div>
+		         </div>
+		        </div>
+				<div class="key-btn">
+					<div class="key-btn-item item-color-btn key-item-close"><button style="background: #CFCFCF;">关闭</button></div>
+		            <div class="key-btn-item item-color-btn key-item-swit"><button style="background: #CFCFCF;" id="switBtn">切换abc</button></div>
+		            <div class="key-num-item key-item-set key-btn-0"><button>0</button></div>
+		            <div class="key-btn-item item-color-btn key-item-clear"><button >清空</button></div>
+		            <div class="key-btn-item item-color-btn key-item-back"><button style="background: #CFCFCF;"><img src="../../imgs/trade-buy-key-back.png"/> 退格</button></div>
+		            
+		       </div>
+		</div>
+		<!--自定义键盘 End -->
+		
+		
+		<!-- 行情图 Start -->
+		<!--<div class="box-c"  id="marketGif"  style="display: none;">-->
+		<div class="box-c"  id="marketGif" >
+			<div style="position:absolute;top:0px;  bottom:0; right:0; left:0; overflow:auto">
+				<div class="box-c-span">
+					<span id="gifName">分时图</span>
+				</div>
+				<img id="imgMarketGif" src="http://image.sinajs.cn/newchart/min/n/s_sh000001.gif" width="100%"  />
+				<div class="box-c-span">
+					<input type="hidden" id="imgFlag" value="min" />
+					<input type="hidden" id="imgFlagName" value="分时图" />
+					<a href="#" onclick="marketGif('min', '分时图');">分时图</a>
+					<a href="#" onclick="marketGif('daily','日K线');">日K线</a>
+					<a href="#" onclick="marketGif('weekly','周K线');">周K线</a>
+					<a href="#" onclick="marketGif('monthly','月K线');">月K线</a>
+				</div>
+			</div>
+		</div>
+		<!-- 行情图 Start -->
+
+	</body>
+
+</html>

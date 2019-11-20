@@ -1,0 +1,362 @@
+						
+/** 买入列表 头部 Start  */
+.sub-bg-color{
+	background: #FF3030;
+}
+.sub-bg-color h1{
+	color:#FFFFFF;
+	/*color:#F7EC1E;*/
+	font-weight: bold;
+}
+/* 买入标头 start */
+.mairuTitle {
+	margin-top: 0px;
+	margin-bottom: 1px;
+	background: #FF3030;
+	text-align: center;
+}
+.mairuTitle span{
+	margin-left: 10px;
+	font-size: 15px;
+	color:#FFFFFF;
+}
+/* 买入标头 End */
+
+
+
+/* 买入操作区 */
+.box{
+	overflow: hidden; /*清除浮动*/
+}
+
+/* 买入下单区 */
+.box-a{
+	width: 61%; /*几宫格,调整百分比*/
+	height: 315px;
+	padding: 3px 1px;
+	float: left; /*浮动*/
+	border: 2px solid #E8E8E8; /*添加分隔线*/
+	/*background: blue;*/
+}
+
+.box-a span{
+	width: 100%;
+}
+/* 文档框效果 */
+.box-a span input{
+	margin-top: 0px;
+	margin-bottom: 8px;
+	height: 30px;
+	width: 99%;
+	text-align: center;
+	font-size: 13px;
+	border: 1px solid red;
+}
+
+/* 第1部分:显示小字 */
+.box-a-span1 p{
+	width: 32%; 
+	font-size: 10px;
+	margin-top: 0px;
+	margin-bottom: 5px;
+	overflow: hidden; /** 父级清除浮动 */
+}
+.box-a-font-1-1{
+	float: left ; /* 添加浮动*/
+	text-align: left;
+	margin-left: 2px;
+	color: #383838;
+}
+.box-a-font-1-2{
+	float: left ; /* 添加浮动*/
+	text-align: center;
+	color: #4876FF;
+}
+.box-a-font-1-3{
+	float: left ; /* 添加浮动*/
+	text-align: right;
+	color: red;
+}
+
+/* 第2部分:显示小字 */
+.box-a-span2 p{
+	width: 49%; 
+	font-size: 10px;
+	margin-top: 0px;
+	margin-bottom: 5px;
+	color: #383838;
+}
+.box-a-font-2-1{
+	float: left ; 
+	text-align: left;
+	margin-left: 2px;
+}
+.box-a-font-2-2{
+	float: left ; 
+	text-align: right;
+}
+
+/** 文字+输入框 样式 */
+.box-a-div{
+	width: 100%; 
+	overflow: hidden; /** 父级清除浮动 */
+}
+.box-a-div h5{
+	float: left ;
+	width: 30%;
+	margin-top: 10px;
+	margin-left: 2px;
+}
+.box-a-div div{
+	float: left ;
+	width: 68%;
+}
+.box-a-div input{
+	float: left ;
+	width: 72%;
+}
+
+/* 选择按钮 */
+/* 第2部分:显示小字 */
+.box-a-span3{
+	overflow: hidden;
+	height: 30px;
+	background: red;
+}
+.box-a-span3-p {
+	float: left;
+	width: 24%;
+	background: aqua;
+	color: #FFFFFF;
+	height: 28px;
+}
+
+
+/** 下单委托 按钮 Start */
+.q-select-btn {
+	height: 40px;
+	overflow: hidden;
+	border-bottom: 1px solid #8C8C8C;
+}
+.q-select-btn-group {
+	float: left;
+	width: 25%;
+	/*height: 40px;*/
+}
+/* 按钮 */
+.q-select-btn-click {
+	text-align: center;
+	width: 92%;
+	height: 35px;
+	margin-top: 2px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	border: 1px solid #FFA07A;
+}
+ 
+.q-select-btn-click-1 {
+	text-align: center;
+	width: 92%;
+	height: 32px;
+	margin-top: 2px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	border: 1px solid #FFA07A;
+	background: #FFEC8B;
+	padding-left: -10px;
+}
+/* 快选值 */
+.q-select-btn-p-1{
+	height: 12px;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	padding-left: -10px;
+	font-size: 10px;
+	color: #383838;
+	text-align: center;
+}
+.q-select-btn-p-2 {
+	width: 45px;
+	height: 12px;
+	margin-bottom: 2px;
+	margin-left: -10px;
+	font-size: 10px;
+	color: #383838;
+	text-align: center;
+}
+
+
+/* 买入按钮 */
+.box-a-btn button{
+	width: 100%;
+	height: 32px;
+	/*margin-top: 10px;*/
+	font-size: 18px;
+	padding:0px;
+	background: #FF3030;
+}
+
+/* 数字文本框 */
+.mui-numbox{
+	width: 99%;
+	height: 32px;
+	margin-top: 0px;
+	margin-bottom: 5px;
+	text-align: center;
+	font-size: 13px;
+	border: 1px solid red;
+}
+.mui-numbox button{
+	margin-top: 0px; 
+}
+
+/** 五档行情 */
+.box-b{
+	width: 38%;
+	overflow: hidden; /** 父级清除浮动 */
+	height: 315px;
+	padding: 3px 0px; /** 相比上下左右 间距 */
+	border-bottom: 2px solid #EAEAEA; /*添加 线 */
+	/*background: red;*/
+}
+
+/* 列表样式 */
+.box-b-list{
+	width: 99%; 
+	height: 13px;
+	font-size: 10px;
+	margin-top: 1px;
+	overflow: hidden; /** 父级清除浮动 */
+}
+
+.box-b-list p{
+	width: 32%;
+	font-size: 11px;
+	margin-top: -2px;
+	margin-bottom: 2px;
+	overflow: hidden; /** 父级清除浮动 */
+}
+
+.box-b-list-1{
+	float: left ; 
+	text-align: center;
+	margin-left: 2px;
+	color: #383838;
+}
+.box-b-list-2{
+	float: left ; 
+	text-align: center;
+	color: #383838;
+}
+.box-b-list-3{
+	float: left ; 
+	text-align: right;
+	color: #383838;
+}
+.box-b-list-separ{
+	margin-top: -3px;
+	border-bottom: 1px solid #EAEAEA;
+	margin-bottom: 1px;
+}
+
+.box-price-area{
+	width: 99%;
+	height: 20px;
+	margin-top: 1px;
+	overflow: hidden; /** 父级清除浮动 */
+}
+.box-price-area p{
+	overflow: hidden; /** 父级清除浮动 */
+	color: #4876FF;
+}
+/* 当前股价区 */
+.box-price-area-1{
+	float: left ; 
+	text-align: center;
+	font-size: 16px;
+	margin-top: 0px;
+	font-weight: bold;
+	width: 44%;
+}
+.box-price-area-2{
+	float: left ; 
+	text-align: left;
+	font-size: 12px;
+	padding-top: 3px;
+	padding-left: 3px;
+	font-weight: bold;
+	width: 38%;
+}
+.box-price-area-3{
+	float: left ; 
+	text-align: left;
+	width: 18%;
+}
+.box-price-area-3 a{
+	margin-right: 5px;
+	color: #383838;
+}
+
+/* 上涨颜色 */
+.box-b-list-limit p{
+	color: #FF0000;
+}
+/* 平价颜色 */
+.box-b-list-flat p{
+	color: #878787;
+}
+/* 下跌颜色 */
+.box-b-list-rally p{
+	color: #4876FF;
+}
+
+
+
+/* 区域分隔线 */
+.box-separate {
+	height: 1px;
+	background-color: #CE293A;
+}
+
+
+/** 行情Gif区 */
+.box-c{
+	width: 100%;
+	padding: 5px 0px; /** 相比上下左右 间距 */
+	
+	/*border-bottom: 2px solid #EAEAEA;*/ /*添加 线 */
+	/*background: #87CEEB;*/
+}
+.box-c-span {
+	text-align: center;
+}
+.box-c-span a{
+	color: #FF0000;
+}
+.box-c-span span{
+	font-size: 20px;
+	color: #383838;
+}
+.box-c-span a{
+	font-size: 12px;
+	padding-left: 20px;
+}
+
+
+
+
+/** 行情添加滚动 */
+.mui-scroll-app{
+	margin-top: 45px;
+	margin-left: 61%;
+	height: 285px; /* 高度正好 */
+	width: 38%;
+	/*background: red;*/
+}
+/* 右上角弹出菜单 */
+.mui-popover{
+	width: 120px;
+}
+.mui-popover a{
+	font-size: 13px;
+}

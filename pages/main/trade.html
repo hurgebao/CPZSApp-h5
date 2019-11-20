@@ -1,0 +1,600 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/reapp/app-comn.js" ></script>
+		<script type="text/javascript" src="../../js/reapp/web-ajax.js" ></script>
+		<script type="text/javascript" src="../../js/reapp/req-params.js" ></script>
+		<script type="text/javascript" src="../../js/reapp/trade-buy.js" ></script>
+		<link rel="stylesheet" href="../../css/app-comn.css" />
+		<link rel="stylesheet" href="../../css/trade-buy.css" />
+		<style>
+			/* 弹出框底色 */
+			.mui-backdrop {
+			    background-color: rgba(0,0,0,0);
+			}
+	
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<!-- 隐藏 域 -->
+			<!-- 可用资金 -->
+			<input type="hidden" id="currentEnableAmtHid" value=""/>
+			<!-- 股票名称 -->
+			<input type="hidden" id="stockNameHid" value=""/>
+			<!-- 跌停价 -->
+			<input type="hidden" id="rallyPriceHid" value=""/>
+			<!-- 涨停价 -->
+			<input type="hidden" id="limitPriceHid" value=""/>
+			<!-- 当前价 -->
+			<input type="hidden" id="currentPriceHid" value=""/>
+			<!-- 可买股数 -->
+			<input type="hidden" id="enableNumberHid" value="0"/>
+			<!-- 快选量 -->
+			<input type="hidden" id="qSelNum0Hid" value="0" />
+			<input type="hidden" id="qSelNum2Hid" value="0" />
+			<input type="hidden" id="qSelNum3Hid" value="0" />
+			<input type="hidden" id="qSelNum4Hid" value="0" />
+			
+			<!-- 行情源   2:Level-2行情    1:新浪行情 -->
+			<input type="hidden" id="marketSourceId" value=""/>
+			<input type="hidden" id="marketUrl" value=""/>
+			<input type="hidden" id="marketType" value=""/>
+			<!-- 行情源切换行情 -->
+			<input type="hidden" id="cutTimes" value="0"/>
+			<!-- 是否赋值第一档行情 -->
+			<input type="hidden" id="ifOnePrice" value="T"/>
+			<!-- 交易类型 B买入  S卖出 -->
+			<input type="hidden" id="tradeType" value="B"/>
+			<!-- 行情位置  F未指定位置  T已指定 -->
+			<input type="hidden" id="marketLocal" value="F"/>
+		    <!-- Box Start -->
+			<div class="box">
+				<!-- box a Start -->
+				<div class="box-a">
+					<!-- 股票输入框 -->
+					<span>
+						<div class="box-a-div">
+							<div>
+								<input id='stockCode' type="text" readonly="readonly" class="mui-input-clear mui-input" value=""
+									style="text-align: center;" maxlength="10"  placeholder="请输入股票" onclick="openKeyWindow();" />
+								<a id="menuStock" class="mui-action-menu" href="#topPopoverStockList"></a>
+							</div>
+							<h5 id="stockName" style="color: red;">--</h5>
+						</div>
+            			<!--模糊查询股票列表 Start -->
+						<div id="topPopoverStockList" class="mui-popover stock-popover" style="width: 60%;margin-top: -12px;">
+							<div class="mui-popover-arrow"></div>
+							<div id="offCanvasContentScroll" class="mui-scroll-wrapper mui-scroll-app">  
+	      						<div class="mui-scroll">
+									<ul class="mui-table-view" id="stockLists" style="padding-left: 10px;">
+									</ul>
+								</div>
+							</div>
+						</div>
+						<!--模糊查询股票列表 End -->
+						
+						<!--</div>
+						</div>-->
+						
+					</span>
+					
+					<span >
+						<div style="text-align: right;padding-right: 10px;font-size: 12px;margin-top: -5px;">
+							<a style="color:#8B4513" onclick="toOpenMarketWindow();">持仓选择&gt;</a>
+						</div>
+					</span>
+					<span >
+						<div class="box-a-div">
+							<div class="mui-numbox" data-numbox-min='0' data-numbox-max='9999' data-numbox-step='0.01'>
+								<button class="mui-btn mui-btn-numbox-minus" style="font-size: 25px;background-color: #FF4040;color: #fff;" type="button" onclick="verifyOrderPrice();">-</button>
+								<input  id="orderPrice" class="mui-input-numbox"  type="number"  onkeyup="countProBuyAmt();"  onclick="closeKeyWindow();"/>
+								<button class="mui-btn mui-btn-numbox-plus" style="font-size: 25px;background-color: #FF4040;color: #fff;" type="button" onclick="verifyOrderPrice();">+</button>
+							</div>
+							<h5 style="color:#383838">买入价</h5>
+						</div>
+					</span>
+					<span class="box-a-span1">
+						<p class="box-a-font-1-1" id="profitPer" >涨幅 --%</p>
+						<p class="box-a-font-1-2" id="rallyValue" onclick="setRallyLimitPrice('R');verifyOrderPrice();">跌停 --</p>
+						<p class="box-a-font-1-3" id="limitValue" onclick="setRallyLimitPrice('L');verifyOrderPrice();">涨停 --</p>
+					</span>
+					<span>
+						<div class="box-a-div">
+							<div class="mui-numbox" data-numbox-min='0' data-numbox-max='1000000' data-numbox-step='100'>
+								<button class="mui-btn mui-btn-numbox-minus" style="font-size: 25px;background-color: #FF4040;color: #fff;" type="button" onclick="verifyBuyNum();">-</button>
+								<input  id="buyNum" class="mui-input-numbox"  type="number" onkeyup="countProBuyAmt();" onclick="closeKeyWindow();"/>
+								<button class="mui-btn mui-btn-numbox-plus" style="font-size: 25px;background-color: #FF4040;color: #fff;" type="button" onclick="verifyBuyNum();">+</button>
+							</div>
+							<h5 style="color:#383838">买入量</h5>
+						</div>
+					</span>
+					<span class="box-a-span2" >
+						<p class="box-a-font-2-1" id="enableNumber" >可买 --股</p>
+						<p class="box-a-font-2-2" id="currentEnableAmt">可用 --元</p>
+					</span>
+					
+					<!-- 快选委托量 -->
+					<span class="q-select-btn">
+				    	<div class="q-select-btn-group">
+				    		<button class="q-select-btn-click" qSeltype="0" id="qSeltype0" οnmοusedοwn="mousedown('qSeltype0')" οnmοuseup="mouseup('qSeltype0')" onclick="setQSelBuyNum('qSelNum0')">
+				    			<p class="q-select-btn-p-1">全仓</p>
+				    			<p class="q-select-btn-p-2" id="qSelNum0" style="padding-left: -20px;">--</p>
+				    		</button> 
+				    	</div>
+				    	<div class="q-select-btn-group">
+				    		<button class="q-select-btn-click" qSeltype="2" id="qSeltype2" οnmοusedοwn="mousedown('qSeltype2')" οnmοuseup="mouseup('qSeltype2')" onclick="setQSelBuyNum('qSelNum2')">
+				    			<p class="q-select-btn-p-1">1/2仓</p>
+				    			<p class="q-select-btn-p-2" id="qSelNum2">--</p>
+				    		</button>
+				    	</div>
+				    	<div class="q-select-btn-group">
+				    		<button class="q-select-btn-click" qSeltype="3" id="qSeltype3" οnmοusedοwn="mousedown('qSeltype3')" οnmοuseup="mouseup('qSeltype3')" onclick="setQSelBuyNum('qSelNum3')">
+				    			<p class="q-select-btn-p-1">1/3仓</p>
+				    			<p class="q-select-btn-p-2" id="qSelNum3">--</p>
+				    			
+				    		</button>
+				    	</div>
+				    	<div class="q-select-btn-group">
+				    		<button class="q-select-btn-click" qSeltype="4" id="qSeltype4" οnmοusedοwn="mousedown('qSeltype4')" οnmοuseup="mouseup('qSeltype4')" onclick="setQSelBuyNum('qSelNum4')">
+				    			<p class="q-select-btn-p-1">1/4仓</p>
+				    			<p class="q-select-btn-p-2" id="qSelNum4" style="padding-left: -20px;">--</p>
+				    		</button>
+				    	</div>
+				   </span>
+				   <span >
+						<div style="text-align:left;font-size: 11px;margin-top: 20px;color:red">
+							预买成交: <span id="preBuyAmt">0.00</span> 元 <span style="color:#383838;font-size: 9px;">(不含手续费)</span>
+						</div>
+					</span>
+				    <!--<span style="font-size: 12px;margin-top: 100px;padding-top: 30px;">
+				    	<div >预买金额: 1,100,000.00元</div>
+				    </span>-->
+					<span class="box-a-btn">
+						<button type="button" class="mui-btn mui-btn-danger mui-btn-block" id="buyBtn" style="margin-top: 10px;">买 入</button>
+					</span>
+				</div>
+				<!-- box a End -->
+				
+				<!-- 五档行情区 Start -->
+				<div class="box-b ">
+					<div class="box-price-area">
+						<p class="box-price-area-1" id="currentPrice" onclick="setRallyLimitPrice('O');verifyOrderPrice();">--</p>
+						<p class="box-price-area-2" id="profitPer2">--%</p>
+						<p class="box-price-area-3" >
+							<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a>
+						</p>
+					</div>
+					
+					<!-- 滑动效果 Start  -->
+					<!--<div id="offCanvasContentScroll" class="mui-scroll-wrapper mui-scroll-app">  
+	      			<div class="mui-scroll"> -->
+	      				
+					<!-- 卖出五档 Start -->
+					<div id="box-sell-area">
+						<!-- 卖六 到 卖十 Start -->
+						<div class="box-b-list">
+							<p class="box-b-list-1">卖十</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div>
+						<div class="box-b-list">
+							<p class="box-b-list-1">卖九</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div>
+						<div class="box-b-list">
+							<p class="box-b-list-1">卖八</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div>
+						<div class="box-b-list">
+							<p class="box-b-list-1">卖七</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">--</p>
+						</div>
+						<div class="box-b-list">
+							<p class="box-b-list-1">卖六</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div>
+						<!-- 卖六 到 卖十 End -->
+						<div class="box-b-list">
+							<p class="box-b-list-1">卖五</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div>
+						<div class="box-b-list">
+							<p class="box-b-list-1">卖四</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div>
+						<div class="box-b-list">
+							<p class="box-b-list-1">卖三</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div>
+						<div class="box-b-list">
+							<p class="box-b-list-1">卖二</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div>
+						<div class="box-b-list">
+							<p class="box-b-list-1">卖一</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div>
+					</div>
+					<!-- 卖出五档 End -->
+					
+					<!-- 分隔符 Start -->
+					<div class="box-b-list-separ">
+						<p></p>
+					</div>
+					<!-- 分隔符 End -->
+					
+					<!-- 买入五档 Start -->
+					<div id="box-buy-area">
+						<div class="box-b-list">
+							<p class="box-b-list-1">买一</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div>
+						<div class="box-b-list">
+							<p class="box-b-list-1">买二</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div>
+						<div class="box-b-list">
+							<p class="box-b-list-1">买三</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div>
+						<div class="box-b-list">
+							<p class="box-b-list-1">买四</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div>
+						<div class="box-b-list">
+							<p class="box-b-list-1">买五</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div>
+						<!-- 买六  到 买十 Start -->
+						<div class="box-b-list">
+							<p class="box-b-list-1">买六</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div>
+						<div class="box-b-list">
+							<p class="box-b-list-1">买七</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div>
+						<div class="box-b-list">
+							<p class="box-b-list-1">买八</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div>
+						<div class="box-b-list">
+							<p class="box-b-list-1">买九</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div> 
+						<div class="box-b-list">
+							<p class="box-b-list-1">买十</p>
+							<p class="box-b-list-2">--</p>
+							<p class="box-b-list-3">0</p>
+						</div> 
+						<!-- 买六  到 买十 End -->
+					</div>
+					<!-- 买入五档 End -->
+					
+					<!--</div>
+					</div>-->
+					<!-- 滑动效果 End  -->
+					
+				</div>
+				<!-- box b End -->
+				<!-- 五档行情区 End -->
+				
+				<!-- 区域分隔线 -->
+		    	<div class="box-separate"  align="center"></div>
+				
+				
+	
+				<!-- 行情图 Start -->
+				<!--<div class="box-c">
+					<div style="position:absolute; top:318px; bottom:0; right:0; left:0; overflow:auto">
+						<div class="box-c-span">
+							<span id="gifName">分时图</span>
+						</div>
+						<img id="imgMarketGif" src="http://image.sinajs.cn/newchart/min/n/s_sh000001.gif" width="100%"  />
+						<div class="box-c-span">
+							<input type="hidden" id="imgFlag" value="min" />
+							<input type="hidden" id="imgFlagName" value="分时图" />
+							<a href="#" onclick="marketGif('min', '分时图');">分时图</a>
+							<a href="#" onclick="marketGif('daily','日K线');">日K线</a>
+							<a href="#" onclick="marketGif('weekly','周K线');">周K线</a>
+							<a href="#" onclick="marketGif('monthly','月K线');">月K线</a>
+						</div>
+					</div>
+				</div>-->
+				<!-- 行情图 Start -->
+				
+
+				<!--右上角弹出菜单 Start -->
+				<div id="topPopover" class="mui-popover market-source-popover">
+					<div class="mui-popover-arrow"></div>
+					<ul class="mui-table-view" id="marketSourceList">
+						
+					</ul>
+				</div>
+				<!--右上角弹出菜单 End -->
+				
+			</div>
+		</div>
+		
+		
+		
+		
+		<script type="text/javascript">
+			//初始化加载
+			mui.init({
+				subpages:[{
+					url:'trade-buy-key.html',
+					id:'trade-buy-key.html',
+					styles:{
+						top: '317px',
+						bottom: '0px',
+					}
+				}]
+			});
+			
+			
+			/** 点击 自定义 加载行情  */ 
+			function loadStockMarket() {
+				mui('#marketLocal')[0].value = 'F';
+				//重置可买数
+				var stockCode = mui('#stockCode')[0].value;
+				//读取行情
+				queryMarketInfo();
+				
+				if(stockCode == '' || stockCode.length < 6 || stockCode.length > 6) {
+					//设置可买
+					mui('#enableNumber')[0].innerHTML = '可买 -- 股';
+					mui('#enableNumberHid')[0].value = 0;
+					//委托价
+					mui('#orderPrice')[0].value = '';
+					//委托量
+					mui('#buyNum')[0].value = '';
+					
+					/* 模糊查询股票列表 */
+					if(stockCode.length < 6 && stockCode.length > 0) {
+						//模糊查询股票列表
+						queryStockListsByVal(stockCode);
+					} else {
+						//清空列表
+						mui('#stockLists')[0].innerHTML = '';
+					}
+					
+				} else if(stockCode.length == 6) {
+					//隐藏 弹出菜单
+					mui('#topPopoverStockList').popover('hide');
+				}
+			}
+			
+			mui.plusReady(function(){
+				//模糊查询 股票列表
+				mui('.mui-scroll-wrapper').scroll().scrollTo(0,0,100);
+				
+
+				/** 加载行情源 列表  Start  */
+				mui.ajax(sourceUrl, {
+			        headers:{'Content-Type':'application/json'},
+			        dataType:'json',
+			        type:'get',
+			        timeout:5000,
+			        crossDomain:true, //ajax跨域请(ios系统必须这样用，否则https无法正确通信)
+			        success:function(data){
+			        	var data =  JSON.parse(data);
+			        	//请求成功
+//			        	console.log('加载行情源 请求响应数据:'+JSON.stringify(data));
+			        	var marketSourceList = '';
+			        	if(data.length > 0) { 
+			        		mui('#marketLocal')[0].value = 'F';
+			        		for(var i = 0;i < data.length; i++) {
+			        			//console.log('请求响应数据:'+i+'  '+JSON.stringify(data[i]));
+			        			//取第一个为默认行情源
+								if(i == 0) {
+									marketSourceList = marketSourceList + '<li class="mui-table-view-cell"><a name="popoverA" marketSourceId="'+data[i].id+'" marketType="'+data[i].marketType+'" marketUrl="'+data[i].marketUrl+'" marketName="'+data[i].marketName+'" style="color:red">'+data[i].marketName+'</a></li>';
+									//设置 默认优先 行情源
+									mui('#marketSourceId')[0].value = data[i].id;
+									mui('#marketUrl')[0].value = data[i].marketUrl;
+									mui('#marketType')[0].value = data[i].marketType;
+								} else {
+									marketSourceList = marketSourceList + '<li class="mui-table-view-cell"><a name="popoverA" marketSourceId="'+data[i].id+'" marketType="'+data[i].marketType+'" marketUrl="'+data[i].marketUrl+'" marketName="'+data[i].marketName+'" >'+data[i].marketName+'</a></li>';
+								}
+			        		}
+			        	}
+			        	mui('#marketSourceList')[0].innerHTML = marketSourceList;
+			        }, 
+			        error:function(xhr, type, errorThrown){
+			            mui.toast('网络异常');
+			        }
+			  	});
+				/** 加载行情源 列表  End  */
+				
+				/* 点击持仓页面 跳转到交易页面, 取股票代码 */
+				var stockCodeMarket = plus.webview.currentWebview().stockCode;
+				if(stockCodeMarket != null && stockCodeMarket != undefined) {
+					mui('#stockCode')[0].value = stockCodeMarket;
+					mui('#marketLocal')[0].value = 'F';
+					//读取行情
+					queryMarketInfo();
+					
+					//行情显示位置  2 Level-2行情    1新浪行情
+					if(marketType == '2') {
+  						//mui('.mui-scroll-wrapper').scroll().scrollTo(0,-92,100);
+					} else {
+  						//mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0,100);
+					}
+					/** 设置Gif股票 */
+					setSubStockCode();
+				}
+				
+				/* 读取资金 */
+				//Ajax调用后台取数据(资金股份)
+				ajaxCapStockQuery();
+				
+				/** 下单操作 */
+				document.getElementById("buyBtn").addEventListener('tap', function(){
+					//提交订单
+					submitOrder();
+				});
+				
+				/* 输入买入价格, 监听 */
+				document.getElementById("orderPrice").addEventListener('blur', function(){
+					//验证下单价格
+					verifyOrderPrice();
+				});
+				
+				/* 输入买入量, 监听 */
+				document.getElementById("buyNum").addEventListener('blur', function(){
+					//验证买入量
+					verifyBuyNum(); 
+				});
+				
+				/* 输入股票代码 事件监听 */
+				document.getElementById("stockCode").addEventListener('keyup', function(){
+					mui('#marketLocal')[0].value = 'F';
+					//重置可买数
+					var stockCode = this.value;
+					//读取行情
+					queryMarketInfo();
+					
+					if(stockCode == '' || stockCode.length < 6 || stockCode.length > 6) {
+						//设置可买
+						mui('#enableNumber')[0].innerHTML = '可买 -- 股';
+						mui('#enableNumberHid')[0].value = 0;
+						//委托价
+						mui('#orderPrice')[0].value = '';
+						//委托量
+						mui('#buyNum')[0].value = '';
+						
+						/* 模糊查询股票列表 */
+						if(stockCode.length <= 6 && stockCode.length > 0) {
+							//模糊查询股票列表
+							queryStockListsByVal(stockCode);
+						} else {
+							//清空列表
+							mui('#stockLists')[0].innerHTML = '';
+						}
+					} else {
+						//console.log('设置位置'+mui('#marketType')[0].value);
+						//行情显示位置  2 Level-2行情    1新浪行情
+						if(mui('#marketType')[0].value == '2') {
+	  						//mui('.mui-scroll-wrapper').scroll().scrollTo(0,-92,100);
+						} else {
+	  						//mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0,100);
+						}
+					}
+					/** 设置Gif股票 */
+					setSubStockCode();
+				});	
+				
+				/* 输入股票代码 事件监听 点击获取焦点 */
+				document.getElementById("stockCode").addEventListener('focus', function(){
+					var stockCode = this.value;
+					/* 模糊查询股票列表 */
+					if(stockCode.length < 6 && stockCode.length > 0) {
+						//模糊查询股票列表
+						queryStockListsByVal(stockCode);
+					} else if(stockCode.length == 6){
+						//隐藏 弹出菜单
+						mui('#topPopoverStockList').popover('hide');
+					}
+				});	
+				
+				//定时刷新行情
+				setInterval("queryMarketInfo()", 2000);
+				
+				
+				//查询行情掌滑动坐标
+				/*document.querySelector('.mui-scroll-wrapper').addEventListener('scroll', function(e) {
+				  var curscrollX = e.detail.x;
+				  var curscrollY = e.detail.y;
+				  console.log('X:'+curscrollX+'   Y:'+curscrollY);
+				});*/
+				
+				
+				/** 切换行情 */
+				mui('.market-source-popover').on('tap', 'a', function(){
+					var marketSourceId = this.getAttribute('marketSourceId');
+					var marketName = this.getAttribute('marketName');
+					var marketUrl = this.getAttribute('marketUrl');
+					var marketType = this.getAttribute('marketType');
+					//设置行情源
+					mui('#marketSourceId')[0].value = marketSourceId;
+					mui('#marketUrl')[0].value = marketUrl;
+					mui('#marketType')[0].value = marketType;
+					
+					mui('#marketLocal')[0].value = 'F';
+					//重新读取行情
+					queryMarketInfo();
+					
+					//行情显示位置  2 Level-2行情    1新浪行情
+//					console.log('marketType:'+marketType);
+					if(marketType == '2') {
+  						//mui('.mui-scroll-wrapper').scroll().scrollTo(0,-92,100);
+//  					console.log('level-2行情位置');
+					} else {
+  						//mui('.mui-scroll-wrapper').scroll().scrollTo(0, 0,100);
+					}
+					//隐藏 弹出菜单
+					mui('#topPopover').popover('hide');
+					mui.toast('已切换为'+marketName+'行情');
+					
+					//设置选择的颜色
+					var popoverAs = document.getElementsByName('popoverA');
+					for(var i=0;i<popoverAs.length;i++) {
+						if(popoverAs[i].getAttribute('marketSourceId') == marketSourceId) {
+							popoverAs[i].style.cssText = 'color:red';
+						} else {
+							popoverAs[i].style.cssText = 'color:#383838';
+						}
+					}
+				});
+				
+				/* 模糊查询,股票列表 */
+				mui('.stock-popover').on('tap', 'a', function(){
+					var stockCode = this.getAttribute('stockCode');
+					var stockName = this.getAttribute('stockName');
+					mui('#stockCode')[0].value = stockCode;
+					mui('#stockNameHid')[0].value = stockName;
+					mui('#stockName')[0].innerHTML = stockName;
+					//重新读取行情
+					queryMarketInfo();
+					//隐藏 弹出菜单
+					mui('#topPopoverStockList').popover('hide');
+					/** 设置Gif股票 */
+					setSubStockCode();
+					//关闭键盘
+					closeKeyWindow();
+				});
+				
+			});
+			
+			
+			
+		</script>
+	</body>
+
+</html>

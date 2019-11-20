@@ -1,0 +1,215 @@
+						
+/** 证券持仓样式 Start  */
+.sub-bg-color{
+	background: #B0B0B0;
+}
+.sub-bg-color h1{
+	color:#FFFFFF;
+	font-weight: bold;
+}
+
+/** 股金股份列表 */
+.box{
+	overflow: hidden; /*清除浮动*/
+	height: 121px;
+}
+.box-a{
+	width: 25%; /*几宫格,调整百分比*/
+	height: 60px;
+	text-align: center;
+	padding: 5px 5px;
+	float: left; /*浮动*/
+}
+.box-a p{
+	margin: 0px;
+	padding-top: 2px;
+	color: #383838;
+	font-size: 13px;
+	/*font-weight: bold;*/
+	
+}
+.box-a p span{
+	color: #383838;
+	font-size: 10px;
+	/*font-weight: bold;*/
+}
+.box-a span{
+	font-size: 20px;
+	color: black;
+	font-weight: bold;
+}
+
+.box-a button{
+	/*background: #F7F7F7;*/
+	background: -webkit-linear-gradient(#CE293A 80%, #CE293A, #EE5C42); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#CE293A 80%, #CE293A, #EE5C42); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#CE293A 80%, #CE293A, #EE5C42); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#CE293A 80%, #CE293A, #EE5C42); /* 标准的语法（必须放在最后）*/
+	color: #FFFFFF;
+	margin-top: 10px;
+	border: 1px ridge #C7C7C7; /* 边框 */;
+	/*height: 28px;*/
+	font-size: 12px;
+	
+}
+
+/* 持仓资产块 */
+.box-a-p1 {
+	background: #E0E0E0;
+	border-left: 1px ridge #C7C7C7; /* 边框 */;
+	border-top: 1px ridge #C7C7C7; /* 边框 */;
+	border-right: 1px ridge #C7C7C7; /* 边框 */;
+}
+.box-a-p2 {
+	border-left: 1px ridge #C7C7C7; /* 边框 */;
+	border-right: 1px ridge #C7C7C7; /* 边框 */;
+	border-bottom: 1px ridge #C7C7C7; /* 边框 */;
+}
+
+#chiCangRMB{
+	font-weight: bold;
+	padding: 5px 0px 3px 5px;
+	text-align: left;
+	font-size: 15px;
+}
+/* 资产与持仓分隔线 */
+.box-separate {
+	height: 1px;
+	background-color: #8F8F8F;
+}
+
+
+
+
+/* 持仓 列表 Start */
+/* 头部 */
+.box-b{
+	background: #DDDDDD;
+	overflow: hidden; /** 父级清除浮动 */
+	height: 40px;
+	padding: 15px 0px; /** 相比上下左右 间距 */
+	border-bottom: 1px solid #EAEAEA; /*添加 线 */
+}
+.box-b h4{
+	font-weight: normal;
+	margin: 0px;
+	font-size: 13px;
+	color: #383838;
+	text-align: center;
+}
+/* 列表头部 */
+.box-b-1 h4{
+	width: 20%;
+	float: left ; /* 添加浮动*/
+}
+.box-b-2 h4{
+	width: 20%;
+	float: left ; /* 添加浮动*/
+}
+.box-b-3 h4{
+	width: 24%;
+	float: left ; /* 添加浮动*/
+}
+.box-b-4 h4{
+	width: 14%;
+	float: left ; /* 添加浮动*/
+}
+.box-b-5 h5{
+	width: 20%;
+	float: left ; /* 添加浮动*/
+}
+
+/** 持仓列表 */
+.box-list{
+	/*background: #CCCCCC;*/
+	overflow: hidden; /** 父级清除浮动 */
+	height: 40px;
+	padding: 1px 0px; /** 相比上下左右 间距 */
+	border-bottom: 1px solid #EAEAEA; /*添加 线 */
+}
+/* 持仓列表字体*/
+.box-list div p{
+	color: #878787;
+}
+/* 列表背景颜色 盈利 */
+.box-list-bg-color-up div p{
+	color: #CD2626;
+}
+/* 列表背景颜色 亏损 */
+.box-list-bg-color-down div p{
+	color: #4876FF;
+}
+/* 列表样式 */
+.box-list-1{
+	width: 20%;
+	float: left ; /* 添加浮动*/
+}
+.box-list-2{
+	width: 20%;
+	float: left ; /* 添加浮动*/
+}
+.box-list-3{
+	width: 24%;
+	float: left ; /* 添加浮动*/
+}
+.box-list-4{
+	width: 14%;
+	float: left ; /* 添加浮动*/
+}
+.box-list-5{
+	width: 20%;
+	float: left ; /* 添加浮动*/
+}
+.box-list-1 p{
+	text-align: center;
+	margin-bottom: 0px;
+	font-size: 10px;
+	height: 17px;
+}
+.box-list-2 p{
+	text-align: right;
+	padding: 0px 10px 0px 0px;
+	margin-bottom: 0px;
+	font-size: 10px;
+	height: 17px;
+}
+.box-list-3 p{
+	text-align: right;
+	padding: 0px 10px 0px 0px;
+	margin-bottom: 0px;
+	font-size: 10px;
+	height: 17px;
+}
+.box-list-4 p{
+	text-align: right;
+	margin-top: 9px;
+	margin-bottom: 0px;
+	font-size: 10px;
+	height: 17px;
+}
+.box-list-5 p{
+	text-align: center;
+	margin-bottom: 0px;
+	font-size: 10px;
+	height: 17px;
+}
+
+
+/** 证券持仓样式 End  */
+
+
+.box-a-desc{
+	overflow: hidden; /** 父级清除浮动 */
+	height: 30px;
+}
+.box-a-desc-p{
+	width: 50%;
+	float: left;
+	text-align: center;
+}
+.box-a-desc-p button{
+	width: 100%;
+	height: 28px;
+	font-size: 11px;
+	color: #FFFFFF;
+}

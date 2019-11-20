@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript" src="../../js/reapp/app-comn.js" ></script>
+		<link rel="stylesheet" href="../../css/main.css" />
+		<link rel="stylesheet" href="../../css/iconfont.css" />
+	</head>
+	<body>
+		<!-- 头部 Top Start -->
+		<!--<header class="mui-bar mui-bar-nav bg-color">
+		    <a class="mui-pull-left" >
+		    	<img src="../../imgs/logo.png"/>
+		    </a>
+		    <h1 class="mui-title head-title">
+		    	<p class="head-title-2" id="loginAcct">--</span>
+		    </h1>
+		    <a class="mui-pull-right" id="exitLogin">
+		    	<button><h1>退出</h1></button>
+		    </a>
+		</header>-->
+		<!-- 头部 Top End -->
+		
+		<!-- 底部切换卡 Start -->
+		<nav class="mui-bar mui-bar-tab bar-bg-color">
+		    <a class="mui-tab-item" href="chart.html" >
+		        <span class="mui-icon mui-icon-home icon-color-1" ></span>
+		        <span class="mui-tab-label label-color-1">首页</span>
+		    </a>
+		    <a class="mui-tab-item"  href="chicang.html" id="chicang">
+		        <span class="mui-icon mui-icon-eye icon-color-1" ></span>
+		        <span class="mui-tab-label label-color-1">行为分析</span>
+		    </a>
+		    <a id="defaultTab"  class="mui-tab-item mui-active"  href="trade.html">
+		    <!--<a class="mui-tab-item"  href="trade.html" id="trade">-->
+		        <span class="mui-icon mui-icon-starhalf icon-color-2"></span>
+		        <span class="mui-tab-label label-color-2">实时监控</span>
+		    </a>
+		    <!--<a class="mui-tab-item"   href="mairu.html" id="mairu">
+		        <span class="mui-icon mui-icon-download icon-color-2"></span>
+		        <span class="mui-tab-label label-color-2">买入</span>
+		    </a>
+		    <a class="mui-tab-item"  href="maichu.html" id="maichu">
+		        <span class="mui-icon mui-icon-upload icon-color-3"></span>
+		        <span class="mui-tab-label label-color-3">卖出</span>
+		    </a>-->
+		    <!--<a class="mui-tab-item" href="chedan.html">
+		        <span class="mui-icon mui-icon-undo icon-color-1"></span>
+		        <span class="mui-tab-label label-color-1">撤单</span>
+		    </a>-->
+		    <a class="mui-tab-item" href="myset.html">
+		        <span class="mui-icon mui-icon-person icon-color-1"></span>
+		        <span class="mui-tab-label label-color-1">我的关注</span>
+		    </a>
+		</nav>
+		<!-- 底部切换卡 Start -->
+		
+		<script type="text/javascript">
+			mui.init();
+			//当前激活页面
+			var activeTab = null;
+			
+		    //首次启动切滑效果
+	        mui.plusReady(function(){
+	        	
+				//显示登录账号
+				var loginAcct = document.getElementById("loginAcct");
+				if(loginAcct != undefined && loginAcct != null) {
+					//设置登录对象
+					loginAcct.innerHTML = UserInfo.getUserName();
+				}
+				
+				
+				/** 退出登录 Start */
+				/*document.getElementById("exitLogin").addEventListener('tap', function(){
+					mui.confirm('确定退出交易客户端?', '温馨提示', new Array('取消', '确认'), function(e){
+						if(e.index == 1) {
+							//清除本地登录缓存
+							UserInfo.clear();
+							
+							// 跳转到登录页面 
+							var loginPage = plus.webview.getWebviewById('login.html');
+							if(loginPage != null) {
+								loginPage.close();
+							}
+							loginPage = plus.webview.create('login.html', 'login.html');
+							loginPage.show();
+							
+							mui.toast('退出成功');
+						}
+					});
+				});*/
+				/** 退出登录 End */
+				
+	        	//当前激活选项卡
+      			activeTab = mui('#defaultTab')[0].getAttribute('href');
+				//预加载页面
+	            var self = plus.webview.currentWebview();
+	            var sub = plus.webview.create(
+							activeTab,
+							activeTab,{
+								top: '0px',
+								bottom: '50px',
+								scrollIndicator: "none", //当你的界面的内容足够多的时候,会出现滚动条,这个是隐藏滚动条
+						});
+				self.append(sub);
+      			
+		      	//选项卡点击事件
+		      	mui('.mui-bar-tab').on('tap','a', function(e){
+		      		var targetTab = this.getAttribute('href');
+		      		if(targetTab == activeTab) {
+		      			return;
+		      		}
+		      		
+		      		//隐藏消除之前选项卡;
+		      		var activePage = plus.webview.getWebviewById(activeTab);
+		      		activePage.close();
+		      		
+		      		//创建新页面
+					var sub = plus.webview.create(
+							targetTab,
+							targetTab,{
+								top: '0px',
+								bottom: '50px',
+								scrollIndicator: "none", //当你的界面的内容足够多的时候,会出现滚动条,这个是隐藏滚动条
+						});
+					self.append(sub);
+		      		
+		      		//显示目标选项卡
+		      		plus.webview.show(targetTab);
+		      		
+		      		//更新当前活跃的选项卡
+		      		activeTab = targetTab;
+		      	});
+		      	
+		   });
+			
+			/** 跳转到指定功能页 */
+			function toTradeMain(stockCodeVal, targetTab, targetPageType) {
+				//委托方向  buy买入 sell卖出
+				var targetPageName = 'trade-buy.html';
+				if(targetPageType == 'sell') {
+					targetPageName = 'trade-sell.html';
+				}
+			  	/** 隐藏消除之前选项卡 */
+		      	var activePage = plus.webview.getWebviewById(activeTab);
+		      	activePage.close();
+			  	//创建新页面
+				var sub = plus.webview.create(
+						targetTab,
+						targetTab,{
+							top: '0px',
+							bottom: '50px',
+							scrollIndicator: "none", //当你的界面的内容足够多的时候,会出现滚动条,这个是隐藏滚动条
+						},{
+							stockCode: stockCodeVal,
+							targetPageName:targetPageName,
+							targetPageType:targetPageType
+						});
+				//index 主页面
+				var self = plus.webview.currentWebview();
+				self.append(sub);
+			  	//显示目标选项卡
+			  	plus.webview.show(targetTab);
+			  	//更新当前活跃的选项卡
+			  	activeTab = targetTab;
+			  	/* 选项卡效果 */
+			  	var chicangCss = document.getElementById('chicang');
+//			  	console.log('chicangCss:'+chicangCss);
+			  	chicangCss.classList.remove("mui-active");
+			  	var tradeCss = document.getElementById('defaultTab');
+//			  	console.log('tradeCss:'+tradeCss);
+			  	tradeCss.classList.add("mui-active");
+			}
+
+			
+		</script>
+	</body>
+</html>

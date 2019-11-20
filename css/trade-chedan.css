@@ -1,0 +1,165 @@
+/** 证券持仓样式 Start  */
+/* 页面标头 Start */
+.sub-bg-color{
+	background:#DCDCDC; /* 一些不支持背景渐变的浏览器 */  
+    background:-moz-linear-gradient(top, #fff, #cccccc);  
+    background:-webkit-gradient(linear, 0 0, 0 bottom, from(#fff), to(#cccccc));  
+    background:-o-linear-gradient(top, #fff, #cccccc); ;border-bottom:#cb2938 3px solid;border-top:#cfcfcf 1px solid;
+} 
+.mui-bar{
+	border-bottom: 2px solid #EE3B3B;	
+}
+.sub-bg-color h1{
+	color:#2B2B2B;
+	font-weight: bold;
+}
+.sub-bg-color .mui-action-back {
+	color:#2B2B2B;
+}
+/* 页面标头 End */
+
+/* 撤单标头 start */
+.chedanTitle {
+	margin-top: 0px;
+	margin-bottom: 1px;
+	/*background: #EE6A50;*/
+}
+.chedanTitle span{
+	margin-left: 10px;
+	font-size: 15px;
+	color:#FFFFFF;
+}
+/* 撤单标头 End */
+
+
+/* 委托列表 */
+.box-a{
+	background: #DDDDDD;
+	overflow: hidden; /** 父级清除浮动 */
+	height: 40px;
+	padding: 15px 0px; /** 相比上下左右 间距 */
+	border-bottom: 1px solid #EAEAEA; /*添加 线 */
+}
+
+.box-a h4{
+	font-weight: normal;
+	margin: 0px;
+	font-size: 14px;
+	color: #383838;
+	text-align: center;
+}
+/* 列表头部 */
+.box-a-1 h4{
+	width: 24%;
+	/*background: blue;*/
+	float: left ; /* 添加浮动*/
+}
+.box-a-2 h4{
+	width: 24%;
+	/*background: darkcyan;*/
+	float: left ; /* 添加浮动*/
+}
+.box-a-3 h4{
+	width: 26%;
+	/*background: darkgoldenrod;*/
+	float: left ; /* 添加浮动*/
+}
+.box-a-4 h4{
+	width: 22%;
+	/*background: lawngreen;*/
+	float: left ; /* 添加浮动*/
+}
+
+/** 列表数据区 */
+.box-a-list{
+	/*background: #CCCCCC;*/
+	overflow: hidden; /** 父级清除浮动 */
+	height: 40px;
+	padding: 0px 0px; /** 相比上下左右 间距 */
+	border-bottom: 1px solid #DBDBDB; /*添加 线 */
+}
+
+/* 持仓列表字体*/
+.box-a-list div p{
+	color: #383838;
+}
+/* 列表背景颜色 盈利 */
+.box-list-bg-color-up div p{
+	color: #CD2626;
+}
+/* 列表背景颜色 亏损 */
+.box-list-bg-color-down div p{
+	color: #4876FF;
+}
+
+/* 展示列表数据样式 */
+.box-a-list-1{
+	width: 24%;
+	float: left ; /* 添加浮动*/
+}
+.box-a-list-2{
+	width: 24%;
+	float: left ; /* 添加浮动*/
+}
+.box-a-list-3{
+	width: 26%;
+	float: left ; /* 添加浮动*/
+}
+.box-a-list-4{
+	width: 22%;
+	float: left ; /* 添加浮动*/
+	/*margin-top: 8px;*/
+}
+.box-a-list-1 p{
+	text-align: center;
+	margin-bottom: 0px;
+	font-size: 13px;
+	height: 17px;
+}
+.box-a-list-2 p{
+	text-align: center;
+	padding: 0px 10px 0px 0px;
+	margin-bottom: 0px;
+	font-size: 13px;
+	height: 17px;
+}
+.box-a-list-3 p{
+	text-align: center;
+	padding: 0px 10px 0px 0px;
+	margin-bottom: 0px;
+	font-size: 13px;
+	height: 17px;
+}
+.box-a-list-4 p{
+	text-align: center;
+	margin-bottom: 0px;
+	font-size: 13px;
+	height: 17px;
+}
+/** 展示列表数据样式 End  */
+
+/** 列表 描述 Start */
+.box-a-desc{
+	background: #383838;
+}
+.box-a-desc-p{
+	overflow: hidden; /** 父级清除浮动 */
+	margin-top: 0px;
+	margin-left: 15px;
+	height: 1em;
+}
+.box-a-desc-p-1{
+	width: 35%;
+	float: left;
+	font-size: 11px;
+	margin-top: -3px;
+	padding-left : 3em;
+}
+.box-a-desc-p-2{
+	width: 64%;
+	float: left;
+	font-size: 11px;
+	margin-top: -3px;
+}
+/** 列表 描述 End */
+
